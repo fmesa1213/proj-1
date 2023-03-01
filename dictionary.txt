@@ -1,0 +1,58 @@
+/*
+Author: Frida Mesa
+Course: CSCI-135
+Instructor: 
+Assignment: Project 1 Task A
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <climits>
+using namespace std;
+
+
+const int g_MAX_WORDS = 1000;
+int g_word_count = 0;
+
+string g_words[g_MAX_WORDS];
+string g_definitions[g_MAX_WORDS];
+string g_pos[g_MAX_WORDS];
+
+
+/*
+    @param            :   The string with a query word
+    @return           :   Integer index of the word in
+                          `g_words` global-array. Returns
+                          -1 if the word is not found
+    @post             :   Find the index of given `word`
+                          in the `g_words` array. Return -1
+                          if word is not in the array
+*/
+
+void readWords(string filename){
+ifstream fin;
+fin.open (filename);
+if (fin.fail()){
+cerr << "File cannot be opened for reading." << endl;
+exit(1);}
+
+string line;
+string word;
+string pos;
+string definition;
+string junk;
+
+while(fin >> word >> pos >> junk){
+getline(fin, definition);
+definition = definition.substr(1, definition.length());
+g_words[g_words_count] = word;
+g_pos[g_words_count] = pos;
+g_definitions[g_words_count] = definition;
+g_word_count++;
+}
+fin.close();
+}
+
+
